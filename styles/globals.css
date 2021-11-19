@@ -1,4 +1,28 @@
-html,
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-secondary text-gray-100
+}
+
+a:hover {
+  @apply text-accent
+}
+
+h3 {
+  @apply text-accent text-xl
+}
+
+input {
+  @apply bg-transparent border-accent border rounded
+}
+
+br {
+  @apply border-primary border-b-0
+}
+
+/* html,
 body {
   padding: 0;
   margin: 0;
@@ -13,4 +37,4 @@ a {
 
 * {
   box-sizing: border-box;
-}
+} */

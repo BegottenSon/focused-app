@@ -1,0 +1,8 @@
+@keyframes alert {
+    from {
+        transform: translateX(-10px);
+    }
+    to {
+        transform:  translateX(10px);
+    }
+}
