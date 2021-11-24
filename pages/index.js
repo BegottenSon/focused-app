@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 import LandingPage from '../components/LandingPage.jsx';
 import InitialCapture from '../components/InitialCapture.jsx';
@@ -24,27 +23,7 @@ export default function Home() {
        <InitialCapture 
        authUser={user}/>
        : <LandingPage />}
-      
       </main>
-
-      <footer className="flex border-t border-primary justify-center">
-        <a
-          href="https://www.begottensounds.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex flex-col items-center"
-        >
-          Powered by
-          <span>
-            <Image
-              src="/bsn-full.svg"
-              alt="Begotten Sounds Logo"
-              width={144}
-              height={96}
-            />
-          </span>
-        </a>
-      </footer>
     </div>
   );
 }

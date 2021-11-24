@@ -6,11 +6,15 @@ body {
   @apply bg-secondary text-gray-100
 }
 
+a {
+  @apply text-primary
+}
+
 a:hover {
   @apply text-accent
 }
 
-h3 {
+h1, h3 {
   @apply text-accent text-xl
 }
 

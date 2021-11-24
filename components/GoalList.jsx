@@ -17,13 +17,30 @@ import { db } from '../firebase/clientApp.js';
 
 function GoalList({ user, userId }) {
   const [goalList, setGoalList] = useState(null);
+  const [userRef, setUserRef] = useState('1');
 
   useEffect(() => {
     setGoalList(user.goals);
+    async function loadUser() {
+      if (user && userId) {
+        setUserRef(doc(db, 'users', userId));
+      } else {
+        setUserRef(doc(db, 'users', 'VHw0VazeFRB5ZelyJiuU'));
+        console.log('default user loaded');
+      }
+    }
+    loadUser();
   }, [user]);
 
   //FIREBASE USER VARIBLE DECLARATIONS
-  const userRef = doc(db, 'users', userId);
+  // let userRef = doc(db, 'users', '1');
+  const checkRef = collection(db, 'users');
+  const que = query(checkRef, where('username', '==', 'BegottenSon'));
+  async function checker() {
+    const snap = await getDocs(que);
+    await snap.forEach((doc) => console.log(doc.id));
+  }
+  // checker()
 
   //EDIT EXISTING GOAL SETTINGS
   const [editGoal, setEditGoal] = useState('');
@@ -55,7 +72,11 @@ function GoalList({ user, userId }) {
     let editIndex = goalList.findIndex((goal) => goal.id === activeID);
     newList.splice(editIndex, 1, newGoal);
     setGoalList(newList);
-    await updateDoc(userRef, { goals: newList });
+    //Update Firebase only if there's a user logged in
+    if (user) {
+      await updateDoc(userRef, { goals: newList });
+    }
+
     setEditGoal('');
     setActiveID(0);
   }
@@ -72,14 +93,21 @@ function GoalList({ user, userId }) {
 
   async function addNewGoal() {
     if (newGoal !== '') {
-      setNextID(goalList.length + 1);
       let addedGoal = {
-        id: goalList.length + 1,
+        id: Math.floor(Math.random() * 2000),
         goal: newGoal,
       };
-      setGoalList([addedGoal, ...goalList]);
-      //Connection to Firebase
-      await updateDoc(userRef, { goals: [addedGoal, ...goalList] });
+
+      if (goalList) {
+        setGoalList([addedGoal, ...goalList]);
+        //Connection to Firebase only if there's a user logged in
+        if (user) {
+          await updateDoc(userRef, { goals: [addedGoal, ...goalList] });
+        }
+      } else {
+        setGoalList([addedGoal]);
+        await updateDoc(userRef, { goals: [addedGoal] });
+      }
       setNewGoal('');
       setErrorStyle({});
     } else {
@@ -91,8 +119,11 @@ function GoalList({ user, userId }) {
   //DELETE GOAL SETTINGS
   async function removeGoal() {
     let filteredList = goalList.filter((goal) => goal.id !== activeID);
-    await updateDoc(userRef, { goals: filteredList });
-    setGoalList(filteredList);``
+    //Update Firebase only if user is logged in
+    if (user) {
+      await updateDoc(userRef, { goals: filteredList });
+    }
+    setGoalList(filteredList);
     setActiveID(0);
   }
 
@@ -113,25 +144,29 @@ function GoalList({ user, userId }) {
         </div>
       )}
       <ul className="w-full">
-        {goalList
-          ? goalList.map((goal) => {
-              return (
-                <Goal
-                  key={goal.id}
-                  goal={goal.goal}
-                  edit={() => {
-                    setActiveID(goal.id);
-                    setEditGoal(goal.goal);
-                  }}
-                  editing={activeID === goal.id}
-                  editValue={editGoal}
-                  onEditing={handleCurrentEditing}
-                  onSave={saveGoal}
-                  onRemove={removeGoal}
-                />
-              );
-            })
-          : 'Add a goal to get inspired'}
+        {goalList ? (
+          goalList.map((goal) => {
+            return (
+              <Goal
+                key={goal.id}
+                goal={goal.goal}
+                edit={() => {
+                  setActiveID(goal.id);
+                  setEditGoal(goal.goal);
+                }}
+                editing={activeID === goal.id}
+                editValue={editGoal}
+                onEditing={handleCurrentEditing}
+                onSave={saveGoal}
+                onRemove={removeGoal}
+              />
+            );
+          })
+        ) : (
+          <li className="my-3 p-2 text-center text-xl bg-cool-blue rounded">
+            Add a goal to get inspired
+          </li>
+        )}
       </ul>
     </section>
   );
