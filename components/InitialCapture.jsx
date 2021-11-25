@@ -12,7 +12,6 @@ import { db } from '../firebase/clientApp.js';
 import { useEffect, useState } from 'react';
 
 function InitialCapture({ authUser }) {
-  //TODO: setup varibles for inputs and object to send to Firebase
   const [firstName, setFirstName] = useState('');
   const [focus, setFocus] = useState('');
   const [life, setLife] = useState('');
