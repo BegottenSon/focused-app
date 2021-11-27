@@ -63,22 +63,22 @@ function Goals() {
           <h1 className="text-3xl text-center">
             Focus {activeUser.first_name}, Here&apos;s Your Goals!
           </h1>
-          <section className=" flex flex-col md:gap-8 gap-2 h-screen md:h-96 m-3 border-gray-200 border rounded-xl bg-gradient-to-r from-gray-800 to-secondary overflow-y-scroll md:flex-row">
+          <section className="flex flex-col md:gap-8 gap-2 h-screen md:h-full m-3 border-gray-200 border rounded-xl bg-gradient-to-r from-gray-800 to-secondary overflow-y-scroll md:flex-row">
             <Image
               className="md:object-cover object-scale-down "
-              src="/BSon_transp.png"
+              src="/lady-user.png"
               alt="Begotten Son"
-              height={1000}
-              width={600}
+              height={650}
+              width={500}
             />
-            <article className="grid gap-y-3 pr-3 overflow-y-scroll max-w-prose m-3 my-0">
+            <article className="grid gap-y-3 pr-3 overflow-y-scroll max-w-prose md:w-full m-3 my-0">
               <h3 className="text-center md:text-left">
                 LIFE MISSION STATEMENT:
               </h3>
-              <p>{activeUser.life_mission_statement}</p>
+              <p className='text-lg'>{activeUser.life_mission_statement}</p>
               <hr />
               <h3 className="text-center md:text-left">FOCUS STATEMENT:</h3>
-              <p>{activeUser.focus_statement}</p>
+              <p className='text-lg'>{activeUser.focus_statement}</p>
               <hr />
               <h3 className="text-center md:text-left">GOALS:</h3>
               <GoalList user={activeUser} userId={userId} />

@@ -31,7 +31,7 @@ function Goal({
   return (
     <li
       id='goal'
-      className="flex flex-col md:flex-row justify-between items-center list-none border max-w-prose border-accent rounded p-2 my-2 cursor-pointer hover:border-primary hover:text-primary "
+      className="flex flex-col text-lg md:text-base md:flex-row justify-between items-center list-none border max-w-prose border-accent rounded p-2 my-2 cursor-pointer hover:border-primary hover:text-primary "
       style={completedStyle}
       onClick={handleClick}
     >
