@@ -68,8 +68,8 @@ export default function Profile() {
     console.log(userRef);
   }
   return (
-    <section>
-      <form className="flex flex-col gap-2 items-center">
+    <section className='grid place-items-center'>
+      <form className="grid gap-2 items-center">
         <Input
           label="First Name: "
           value={firstName}
@@ -84,6 +84,7 @@ export default function Profile() {
           label="Life Mission Statement: "
           value={life}
           setValue={(e) => setLife(e.target.value)}
+          className='self-center'
         />
         <BodyInput
           placeholder="One sentence of your ultimate goal"
@@ -92,7 +93,7 @@ export default function Profile() {
           setValue={(e) => setFocus(e.target.value)}
         />
         <button
-          className="my-4 p-2 border border-primary rounded hover:bg-cool-blue hover:border-cool-blue"
+          className="my-4 p-2 border border-primary rounded hover:bg-cool-blue hover:border-cool-blue self-center"
           onClick={saveProfile}
         >
           Save Profile
